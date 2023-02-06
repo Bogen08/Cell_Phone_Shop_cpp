@@ -2,6 +2,8 @@
 #include<string>
 #include <vector>
 #include <cmath>
+#include <string>
+#include <bits/stdc++.h>
 
 using namespace std;
 
@@ -66,6 +68,10 @@ struct Counter{
 	string name;
 	int counter;
 };
+
+bool compareCounters(Counter c1, Counter c2){
+	return (c1.counter>c2.counter);
+}
 
 int main(int argc, char** argv) {
 	
@@ -169,6 +175,14 @@ int main(int argc, char** argv) {
 					switch(userChoice){
 						case 1:
 							system("cls");
+							
+							if(phoneStorage.size()==0){	
+								cout<<"No phones in storage"<<endl;
+								system("pause");
+								break;
+							}
+							
+							Found=false;
 							cout<<"Enter Brand name to search: ";
 							getline(cin,inputBrandName);
 							
@@ -177,13 +191,25 @@ int main(int argc, char** argv) {
 									cout<<"Phone Id: "<<i<<endl;
 								    phoneStorage[i].displayInfo();
 								    cout<<endl;
+								    Found=true;
 								}
 							}
+							if(!Found){
+								cout<<"No phones found for the given parameters"<<endl;
+							}
+							
 							system("pause");
 							
 							break;
 						case 2:
 							system("cls");
+							
+							if(phoneStorage.size()==0){	
+								cout<<"No phones in storage"<<endl;
+								system("pause");
+								break;
+							}
+							
 							cout<<"Enter Form factor to search: ";
 							getline(cin,inputFormFactor);
 							
@@ -191,17 +217,28 @@ int main(int argc, char** argv) {
 							cout<<"Enter Screen to search: ";
 							cin>>inputScreenSize;
 							
+							Found=false;
 							for (int i=0;i<phoneStorage.size();i++) {
 								if(phoneStorage[i].getFormFactor() == inputFormFactor && phoneStorage[i].getScreenSize() == inputScreenSize){
 									cout<<"Phone Id: "<<i<<endl;
 								    phoneStorage[i].displayInfo();
 								    cout<<endl;
+								    Found=true;
 								}
+							}
+							if(!Found){
+								cout<<"No phones found for the given parameters"<<endl;
 							}
 							system("pause");
 							break;
 						case 3:
 							system("cls");
+							
+							if(phoneStorage.size()==0){	
+								cout<<"No phones in storage"<<endl;
+								system("pause");
+								break;
+							}
 							
 							counterTool.push_back(Counter(phoneStorage[0].getBrandName(),0));
 							
@@ -226,14 +263,58 @@ int main(int argc, char** argv) {
 										maxJ=j;
 									}
 								}
-								
-							cout<<"Brand name with maximum quantity of the phones: "<<counterTool[maxJ].name<<endl;
-							cout<<"Ammount: "<<counterTool[maxJ].counter<<endl;
+							if(counterTool.size()>0){	
+								cout<<"Brand name with maximum quantity of the phones: "<<counterTool[maxJ].name<<endl;
+								cout<<"Ammount: "<<counterTool[maxJ].counter<<endl;
+							}
+							else
+							{
+								cout<<"No phones found for the given parameters"<<endl;	
+							}
 							counterTool.clear();
 							system("pause");
 							
 							break;
 						case 4:
+							system("cls");
+							
+							if(phoneStorage.size()==0){	
+								cout<<"No phones in storage"<<endl;
+								system("pause");
+								break;
+							}
+							
+							counterTool.push_back(Counter(to_string(phoneStorage[0].getScreenSize()),0));
+							
+							for (int i=0;i<phoneStorage.size();i++) {
+								Found=false;
+								
+								for (int j=0;j<counterTool.size();j++) {
+									if(to_string(phoneStorage[i].getScreenSize()) == counterTool[j].name){
+										counterTool[j].counter++;
+										Found=true;
+									}
+									
+								}
+								if(!Found){
+									counterTool.push_back(Counter(to_string(phoneStorage[i].getScreenSize())));
+								}
+							}
+							if(counterTool.size()>0){
+								sort(counterTool.begin(),counterTool.end(),compareCounters);
+								for (int j=0;j<counterTool.size() && j<3;j++) {
+									cout<<"No."<<j+1<<" Screen size: "<<counterTool[j].name.substr (0,3)<<endl;
+									cout<<"Ammount: "<<counterTool[j].counter<<endl;
+									}
+							}
+							else{
+								cout<<"No phones found for the given parameters"<<endl;	
+							}
+							
+								
+							
+							counterTool.clear();
+							system("pause");
 							break;
 						case 5:
 							reportExit=true;

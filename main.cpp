@@ -10,7 +10,7 @@ class Phone{
 	string modelName;
 	string formFactor;
 	int yearOfIssue;
-	string screenSize;
+	float screenSize;
 	float price;
 	
 	public:
@@ -20,7 +20,7 @@ class Phone{
 			string modelName,
 			string formFactor,
 			int yearOfIssue,
-			string screenSize,
+			float screenSize,
 			float price){
 				
 			this->brandName=brandName;
@@ -42,7 +42,7 @@ class Phone{
 		int getYearOfIssue(){
 			return  this->yearOfIssue;
 		}
-		string getScreenSize(){
+		float getScreenSize(){
 			return  this->screenSize;
 		}
 		float getPrice(){
@@ -79,10 +79,13 @@ int main(int argc, char** argv) {
 	string inputModelName;
 	string inputFormFactor;
 	int inputYearOfIssue;
-	string inputScreenSize;
+	float inputScreenSize;
 	float inputPrice;
 	bool reportExit;
-	bool notFound;
+	bool Found;
+	
+	int maxCount;
+	int maxJ;
 	
 	vector<Phone> phoneStorage;
 	vector<Counter> counterTool;
@@ -120,7 +123,7 @@ int main(int argc, char** argv) {
 				
 				system("cls");
 				cout<<"Enter Screen size: ";
-				getline(cin,inputScreenSize);
+				cin>>inputScreenSize;
 				
 				system("cls");
 				cout<<"Enter Price: ";
@@ -163,12 +166,6 @@ int main(int argc, char** argv) {
 					cin>>userChoice;
 					getline(cin,s);
 					
-					for (int i=0;i<phoneStorage.size();i++) {
-						cout<<"Phone Id: "<<i<<endl;
-					    phoneStorage[i].displayInfo();
-					    cout<<endl;
-					}
-					
 					switch(userChoice){
 						case 1:
 							system("cls");
@@ -192,7 +189,7 @@ int main(int argc, char** argv) {
 							
 							system("cls");
 							cout<<"Enter Screen to search: ";
-							getline(cin,inputScreenSize);
+							cin>>inputScreenSize;
 							
 							for (int i=0;i<phoneStorage.size();i++) {
 								if(phoneStorage[i].getFormFactor() == inputFormFactor && phoneStorage[i].getScreenSize() == inputScreenSize){
@@ -204,22 +201,37 @@ int main(int argc, char** argv) {
 							system("pause");
 							break;
 						case 3:
+							system("cls");
+							
+							counterTool.push_back(Counter(phoneStorage[0].getBrandName(),0));
+							
 							for (int i=0;i<phoneStorage.size();i++) {
-								notFound=false;
+								Found=false;
+								
 								for (int j=0;j<counterTool.size();j++) {
-									if(phoneStorage[i].getBrandName() == counterTool[i].name)
-									counterTool[i].counter++;
-									notFound=true;
+									if(phoneStorage[i].getBrandName() == counterTool[j].name){
+										counterTool[j].counter++;
+										Found=true;
+									}
+									
 								}
-								if(!notFound){
+								if(!Found){
 									counterTool.push_back(Counter(phoneStorage[i].getBrandName()));
 								}
 							}
+							maxCount=0;
 							for (int j=0;j<counterTool.size();j++) {
-									cout<<"Brand name: "<<counterTool[j].name<<endl;
-									cout<<"Ammount: "<<counterTool[j].counter<<endl;
+									if(counterTool[j].counter>maxCount){
+										maxCount=counterTool[j].counter;
+										maxJ=j;
+									}
 								}
+								
+							cout<<"Brand name with maximum quantity of the phones: "<<counterTool[maxJ].name<<endl;
+							cout<<"Ammount: "<<counterTool[maxJ].counter<<endl;
+							counterTool.clear();
 							system("pause");
+							
 							break;
 						case 4:
 							break;

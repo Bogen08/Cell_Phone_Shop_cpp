@@ -1,5 +1,5 @@
 #include <iostream>
-#include<string>
+#include <string>
 #include <vector>
 #include <cmath>
 #include <string>
@@ -7,6 +7,7 @@
 
 using namespace std;
 
+//Class for representing phones in storage
 class Phone{
 	string brandName;
 	string modelName;
@@ -60,6 +61,7 @@ class Phone{
 		}
 };
 
+//Stucture for assisting with counting certain attibutes
 struct Counter{
 	Counter(string name, int counter = 1){
 		this->name=name;
@@ -69,6 +71,7 @@ struct Counter{
 	int counter;
 };
 
+//Function for comparing counter counts
 bool compareCounters(Counter c1, Counter c2){
 	return (c1.counter>c2.counter);
 }
@@ -93,10 +96,11 @@ int main(int argc, char** argv) {
 	int maxCount;
 	int maxJ;
 	
+	//Vectors for storing phones and counters
 	vector<Phone> phoneStorage;
 	vector<Counter> counterTool;
 	
-	
+	//Main program loop
 	while(true){
 		system("cls");
 		cout<<"Main menu"<<endl<<"- - - - - - -"<<endl;
@@ -110,6 +114,7 @@ int main(int argc, char** argv) {
 		
 		switch(userChoice){
 			case 1:
+				//Add a new phone
 				system("cls");
 				cout<<"Enter Brand name: ";
 				getline(cin,inputBrandName);
@@ -145,6 +150,7 @@ int main(int argc, char** argv) {
 				
 				break;
 			case 2:
+				//Delete a phone
 				system("cls");
 				for (int i=0;i<phoneStorage.size();i++) {
 						cout<<"Phone Id: "<<i<<endl;
@@ -158,7 +164,9 @@ int main(int argc, char** argv) {
 				
 				break;
 			case 3:
+				//Show reports
 				reportExit=false;
+				//Report menu loop
 				while(true){
 					
 					system("cls");
@@ -174,6 +182,7 @@ int main(int argc, char** argv) {
 					
 					switch(userChoice){
 						case 1:
+							//Show all phones by the same brand
 							system("cls");
 							
 							if(phoneStorage.size()==0){	
@@ -202,6 +211,7 @@ int main(int argc, char** argv) {
 							
 							break;
 						case 2:
+							//Show all phones of a given form factor and screen size
 							system("cls");
 							
 							if(phoneStorage.size()==0){	
@@ -232,6 +242,7 @@ int main(int argc, char** argv) {
 							system("pause");
 							break;
 						case 3:
+							//Show the name of the brand with the maximum quantity of the phones
 							system("cls");
 							
 							if(phoneStorage.size()==0){	
@@ -276,6 +287,7 @@ int main(int argc, char** argv) {
 							
 							break;
 						case 4:
+							//Show TOP-3 screen sizes
 							system("cls");
 							
 							if(phoneStorage.size()==0){	
@@ -317,6 +329,7 @@ int main(int argc, char** argv) {
 							system("pause");
 							break;
 						case 5:
+							//Go back to the Main menu
 							reportExit=true;
 							break;
 						default:
@@ -329,6 +342,7 @@ int main(int argc, char** argv) {
 				
 				break;
 			case 4:
+				//Exit application
 				cout<<endl<<"Goodbye"<<endl;
 				return 0;
 			default:
